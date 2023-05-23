@@ -7,6 +7,7 @@ int main() {
 	std::string playerChoice, computerChoice;
 	int result;
 	char playAgain;
+	int playerWins = 0, playerLosses = 0, ties = 0;
 
 	srand(time(0));
 
@@ -24,11 +25,9 @@ int main() {
 
 		if (randomNum == 0) {
 			computerChoice = "rock";
-		}
-		else if (randomNum == 1) {
+		} else if (randomNum == 1) {
 			computerChoice = "paper";
-		}
-		else {
+		} else {
 			computerChoice = "scissors";
 		}
 
@@ -42,9 +41,11 @@ int main() {
 			(playerChoice == "paper" && computerChoice == "rock") ||
 			(playerChoice == "scissors" && computerChoice == "paper")) {
 			result = 1; // Player wins
+			playerWins++; // If player won, bot lost
 		}
 		else {
 			result = -1; // Computer wins
+			playerLosses++; // If the bot won, the player lost
 		}
 
 		if (result == 0) {
@@ -57,11 +58,22 @@ int main() {
 			std::cout << "Computer wins!\n";
 		}
 
+		std::cout << "Scoreboard:\n";
+		std::cout << "Player wins: " << playerWins << std::endl;
+		std::cout << "Player losses: " << playerLosses << std::endl;
+		std::cout << "Ties: " << ties << std::endl;
+
 		std::cout << "Do you want to play again? (y/n): ";
 		std::cin >> playAgain;
 
 		// Clear input buffer
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		if (playAgain == 'n' ||/*OR*/ playAgain == 'N') {
+			std::cout << "Okay, bye bye!\n";
+			break; // Exit the loop
+		}
+
 	} while (playAgain == 'y' || playAgain == 'Y');
 
 	return 0;
